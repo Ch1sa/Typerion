@@ -1,0 +1,109 @@
+/* ==========================================================================
+   keyboard.css
+   ゴースト・キーボード(戦闘画面中央の視覚補助)
+   ========================================================================== */
+
+#ghost-keyboard {
+  background: var(--bg-alt);
+  padding: 14px 16px;
+  border-top: 1px solid var(--border);
+  border-bottom: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  user-select: none;
+  box-shadow: none;
+}
+.gk-row {
+  display: flex;
+  gap: 4px;
+  justify-content: center;
+}
+.gk-row.r1 { padding-left: 0; }
+.gk-row.r2 { padding-left: 20px; }
+.gk-row.r3 { padding-left: 40px; }
+.gk-row.r4 { padding-left: 0; }
+
+.gk-key {
+  width: 42px;
+  height: 38px;
+  background: #ede5d6;
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 14px;
+  color: var(--text);
+  position: relative;
+  transition: all 0.08s ease-out;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.08);
+}
+.gk-key.wide-1-5 { width: 64px; }
+.gk-key.wide-2 { width: 90px; }
+.gk-key.wide-2-5 { width: 110px; }
+.gk-key.space { width: 240px; }
+
+/* 指の色分け(下線の色で示す) - 濃く彩度高めで視認性確保 */
+.gk-key.f-left-pinky   { border-bottom: 4px solid #c73232; }
+.gk-key.f-left-ring    { border-bottom: 4px solid #d68a1a; }
+.gk-key.f-left-middle  { border-bottom: 4px solid #3a9c6d; }
+.gk-key.f-left-index   { border-bottom: 4px solid #2e7fa6; }
+.gk-key.f-right-index  { border-bottom: 4px solid #2e7fa6; }
+.gk-key.f-right-middle { border-bottom: 4px solid #3a9c6d; }
+.gk-key.f-right-ring   { border-bottom: 4px solid #d68a1a; }
+.gk-key.f-right-pinky  { border-bottom: 4px solid #c73232; }
+.gk-key.f-thumb        { border-bottom: 4px solid #707878; }
+
+/* 次に打つキーのハイライト */
+.gk-key.next {
+  background: var(--accent);
+  color: #fff;
+  box-shadow: 0 0 16px rgba(58,138,106,0.6), 0 2px 0 var(--accent-dim);
+  transform: translateY(-1px);
+}
+.gk-key.shift-hint {
+  background: var(--accent-light);
+  color: var(--text);
+}
+
+/* 押下時 */
+.gk-key.pressed {
+  background: #fff3c9;
+  color: var(--text);
+  transform: translateY(2px);
+  box-shadow: 0 0 0 rgba(0,0,0,0);
+}
+.gk-key.miss-flash {
+  background: var(--ng);
+  color: #fff;
+  animation: keyMiss 0.3s;
+}
+@keyframes keyMiss {
+  0% { background: var(--ng); transform: translateY(2px) scale(1.05); }
+  100% { background: var(--bg); transform: translateY(0) scale(1); }
+}
+
+/* 指の凡例 */
+.gk-fingers {
+  display: flex;
+  gap: 14px;
+  font-size: 12px;
+  color: var(--text);
+  font-family: var(--font-mono);
+  font-weight: 500;
+  margin-top: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.gk-fingers .f-chip {
+  display: inline-block;
+  width: 14px;
+  height: 5px;
+  border-radius: 2px;
+  margin-right: 5px;
+  vertical-align: middle;
+}
+

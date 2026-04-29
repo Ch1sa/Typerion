@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<title>Typerion TD</title>
+<meta name="description" content="タイピング練習×タワーディフェンス。ブラインドタッチでモンスターを召喚して拠点を守ろう。">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/layout.css">
+<link rel="stylesheet" href="css/battle.css">
+<link rel="stylesheet" href="css/keyboard.css">
+<link rel="stylesheet" href="css/overlays.css">
+<link rel="stylesheet" href="css/records.css">
+<link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+
+<div id="loading">
+  <div class="spinner"></div>
+  <div style="font-family: var(--font-mono); color: var(--text-dim);">辞書を読み込んでいます...</div>
+</div>
+
+<div id="app" style="display: none;">
+  <header>
+    <h1>🌱 Typerion TD</h1>
+    <div class="stats">
+      <span>成熟度<strong id="stat-maturity">0</strong></span>
+      <span>拠点Lv<strong id="stat-baselevel">1</strong></span>
+      <span>正確率<strong id="stat-accuracy">-</strong></span>
+    </div>
+  </header>
+
+  <main>
+    <!-- ホーム -->
+    <div id="home-screen" class="overlay">
+      <h2>Typerion TD</h2>
+      <p class="sub">タイピングで拠点を守り、木を育てよう</p>
+      <div class="base-preview" id="home-base-preview">🌱</div>
+      <button class="menu-btn primary" onclick="Game.openStageSelect()">ステージ選択</button>
+      <button class="menu-btn" onclick="Game.openRecords()">📊 記録</button>
+      <button class="menu-btn" onclick="Game.openSettings()">設定</button>
+      <button class="menu-btn" onclick="Game.openHelp()">遊び方</button>
+    </div>
+
+    <!-- ステージ選択 -->
+    <div id="stage-select" class="overlay hidden">
+      <div class="stage-dict-panel">
+        <div class="stage-dict-panel-title">各Tierの出題辞書</div>
+        <div class="stage-dict-rows">
+          <div class="stage-dict-line">
+            <span class="stage-dict-tier t1">Tier 1</span>
+            <span class="stage-dict-name" id="stage-select-dict-1"></span>
+          </div>
+          <div class="stage-dict-line">
+            <span class="stage-dict-tier t2">Tier 2</span>
+            <span class="stage-dict-name" id="stage-select-dict-2"></span>
+          </div>
+          <div class="stage-dict-line">
+            <span class="stage-dict-tier t3">Tier 3</span>
+            <span class="stage-dict-name" id="stage-select-dict-3"></span>
+          </div>
+        </div>
+      </div>
+      <h2 class="stage-select-heading">ステージ選択</h2>
+      <div class="stage-list" id="stage-list"></div>
+      <button class="menu-btn" onclick="Game.backToHome()">戻る</button>
+    </div>
+
+    <!-- 戦闘画面 -->
+    <div id="battlefield">
+      <canvas id="canvas"></canvas>
+    </div>
+    <div id="ghost-keyboard">
+      <!-- JS で動的に生成 -->
+    </div>
+    <div id="casting">
+      <div class="tier-selector">
+        <button class="tier-btn tier1 active" data-tier="1" onclick="Game.setTier(1)">
+          <kbd>Tab+1</kbd><span class="tier-label">初級</span>
+        </button>
+        <button class="tier-btn tier2" data-tier="2" onclick="Game.setTier(2)">
+          <kbd>Tab+2</kbd><span class="tier-label">中級</span>
+        </button>
+        <button class="tier-btn tier3" data-tier="3" onclick="Game.setTier(3)">
+          <kbd>Tab+3</kbd><span class="tier-label">上級</span>
+        </button>
+      </div>
+      <div id="word-display">準備中...</div>
+    </div>
+
+    <!-- 結果画面 -->
+    <div id="result-screen" class="overlay hidden">
+      <div class="result-box">
+        <h2 id="result-title" style="text-align:center;">STAGE CLEAR</h2>
+        <div class="result-row"><span>スコア</span><span id="r-score">0</span></div>
+        <div class="result-row"><span>正確率</span><span id="r-accuracy">0%</span></div>
+        <div class="result-row"><span>KPM</span><span id="r-kpm">0</span></div>
+        <div class="result-row"><span>召喚ユニット</span><span id="r-units">0</span></div>
+        <div class="result-row"><span>撃破数</span><span id="r-kills">0</span></div>
+        <div class="result-row"><span>成熟度 +</span><span id="r-maturity">0</span></div>
+        <div style="margin-top: 20px; text-align: center;">
+          <button class="menu-btn primary" onclick="Game.openStageSelect()">ステージ選択</button>
+          <button class="menu-btn" onclick="Game.backToHome()">ホーム</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 設定画面 -->
+    <div id="settings-screen" class="overlay hidden">
+      <div class="settings-box">
+        <h2 style="font-size: 22px; margin-bottom: 18px;">Settings</h2>
+
+        <div class="settings-section">
+          <h3>各Tierの出題辞書</h3>
+          <div class="tier-dict-row">
+            <label style="color:var(--tier1);">Tier 1</label>
+            <select id="dict-select-1" onchange="Game.setTierDict(1, this.value)"></select>
+          </div>
+          <div class="tier-dict-row">
+            <label style="color:var(--tier2);">Tier 2</label>
+            <select id="dict-select-2" onchange="Game.setTierDict(2, this.value)"></select>
+          </div>
+          <div class="tier-dict-row">
+            <label style="color:var(--tier3);">Tier 3</label>
+            <select id="dict-select-3" onchange="Game.setTierDict(3, this.value)"></select>
+          </div>
+        </div>
+
+        <div class="settings-section">
+          <h3>セーブデータ</h3>
+          <button onclick="Game.exportSave()">エクスポート</button>
+          <label class="file-input-label">
+            インポート
+            <input type="file" id="save-upload" accept=".json" onchange="Game.uploadSave(event)">
+          </label>
+        </div>
+
+        <div class="settings-section">
+          <h3>データリセット</h3>
+          <button onclick="Game.openResetConfirm('records')">記録だけリセット(成熟度は保持)</button>
+          <button class="danger" onclick="Game.openResetConfirm('hard')">全データをリセット</button>
+        </div>
+
+        <div style="text-align:center; margin-top: 16px;">
+          <button class="menu-btn" onclick="Game.backToHome()">戻る</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 記録画面 -->
+    <div id="records-screen" class="overlay hidden">
+      <div class="records-box">
+        <div class="records-head">
+          <h2 style="font-size: 20px; margin-bottom: 0;">📊 My Records</h2>
+          <div class="records-start-date" id="records-start-date">プレイ開始: -</div>
+        </div>
+
+        <div class="records-section">
+          <h3>サマリー</h3>
+          <div class="stats-grid" id="stats-grid"></div>
+        </div>
+
+        <div class="records-section">
+          <h3>キーボードヒートマップ</h3>
+          <p class="heatmap-note">ミス率の高いキーが赤く表示されます</p>
+          <div id="keyboard-heatmap"></div>
+          <div class="kb-legend">
+            <div class="kb-legend-item"><span class="kb-legend-chip" style="background:var(--bg-alt);"></span>未入力</div>
+            <div class="kb-legend-item"><span class="kb-legend-chip" style="background:#2a4a6a;"></span>〜2%</div>
+            <div class="kb-legend-item"><span class="kb-legend-chip" style="background:#7a5a30;"></span>〜5%</div>
+            <div class="kb-legend-item"><span class="kb-legend-chip" style="background:#8a3a3a;"></span>〜10%</div>
+            <div class="kb-legend-item"><span class="kb-legend-chip" style="background:#c04040;"></span>10%超</div>
+          </div>
+        </div>
+
+        <div class="records-section">
+          <h3>苦手キー TOP 5</h3>
+          <div id="weak-keys-list"></div>
+        </div>
+
+        <div class="records-section">
+          <h3>指別の正確率</h3>
+          <div class="finger-stats" id="finger-stats"></div>
+        </div>
+
+        <div class="records-section">
+          <h3>プレイ履歴(直近10件)</h3>
+          <div style="overflow-x:auto;">
+            <table class="history-table" id="history-table">
+              <thead>
+                <tr>
+                  <th>日時</th>
+                  <th>ステージ</th>
+                  <th>結果</th>
+                  <th>KPM</th>
+                  <th>正確率</th>
+                  <th>スコア</th>
+                </tr>
+              </thead>
+              <tbody id="history-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div style="text-align:center; margin-top: 16px;">
+          <button class="menu-btn" onclick="Game.backToHome()">戻る</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 遊び方 -->
+    <div id="help-screen" class="overlay hidden">
+      <div class="settings-box">
+        <h2 style="font-size: 20px; margin-bottom: 16px;">遊び方</h2>
+        <div class="settings-section">
+          <h3>ゴースト・キーボード</h3>
+          <p>戦闘画面の中央に表示されるキーボード。次に打つキーが青く光り、担当する指が下線の色でわかります。正しく打てば黄色く光り、ミスすると赤く光ります。ブラインドタッチの視覚補助として活用してください。</p>
+        </div>
+        <div class="settings-section">
+          <h3>基本ルール</h3>
+          <p>画面中央のワードをタイピングすると、自軍ユニット(植物)が召喚されます。ユニットは敵(🐛)と戦い、敵拠点(🪹)を破壊するとクリア。自拠点(🌱)のHPが0になるとゲームオーバー。</p>
+        </div>
+        <div class="settings-section">
+          <h3>Tier(難易度)切替</h3>
+          <p><span class="inline-key">Tab</span>+数字キー(1/2/3)、または画面のボタンでTierを切り替え。Tier が高いほど強力なユニットが出るが詠唱時間も長い。各Tierで出る単語は<strong>設定</strong>の「各Tierの出題辞書」から選んで変更できる。</p>
+        </div>
+        <div class="settings-section">
+          <h3>ミスペナルティ</h3>
+          <p>タイプミスをするとその召喚中のユニットの初期HPが5%ずつ減少(最低30%は残ります)。手元を見ずに正確に打つほど強いユニットが出せる。</p>
+        </div>
+        <div class="settings-section">
+          <h3>成熟度</h3>
+          <p>ステージクリアで獲得。一定値に達すると自拠点が進化: 🌱 → 🌿 → 🌳 (HPアップ、自動攻撃)。</p>
+        </div>
+        <div style="text-align:center;">
+          <button class="menu-btn" onclick="Game.backToHome()">戻る</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- データリセット確認 -->
+    <div id="reset-confirm-dialog" class="confirm-dialog hidden" role="dialog" aria-modal="true" aria-labelledby="reset-confirm-title" onclick="Game.closeResetConfirm()">
+      <div class="confirm-dialog-box" onclick="event.stopPropagation()">
+        <h3 id="reset-confirm-title"></h3>
+        <p id="reset-confirm-message" class="confirm-dialog-text"></p>
+        <div class="confirm-dialog-actions">
+          <button type="button" class="menu-btn" onclick="Game.closeResetConfirm()">キャンセル</button>
+          <button type="button" class="menu-btn danger" id="reset-confirm-ok" onclick="Game.confirmResetExecute()"></button>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script type="module" src="js/main.js?v=20260429b"></script>
+</body>
+</html>

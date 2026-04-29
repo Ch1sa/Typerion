@@ -1,0 +1,388 @@
+/* ==========================================================================
+   overlays.css
+   モーダル系画面(ホーム/ステージ選択/結果/設定/ヘルプ/記録)の
+   共通レイアウトとボタン類
+   ========================================================================== */
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: var(--bg);
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  overflow-y: auto;
+}
+.overlay h2 {
+  font-family: var(--font-mono);
+  color: var(--accent);
+  font-size: 28px;
+  margin-bottom: 8px;
+}
+.overlay p.sub { color: var(--text-dim); margin-bottom: 20px; text-align: center; }
+
+.base-preview { font-size: 80px; margin: 10px 0; }
+
+/* 共通ボタン */
+.menu-btn {
+  min-width: 260px;
+  padding: 14px 20px;
+  margin: 5px 0;
+  background: var(--panel);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-family: var(--font-ja);
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.15s;
+  box-shadow: 0 1px 3px var(--panel-shadow);
+}
+.menu-btn:hover {
+  background: var(--bg-alt);
+  border-color: var(--accent);
+  transform: translateY(-1px);
+  box-shadow: 0 3px 6px var(--panel-shadow);
+}
+.menu-btn.primary { background: var(--accent); color: #fff; border-color: var(--accent-dim); }
+.menu-btn.primary:hover { background: var(--accent-dim); }
+
+/* ステージ選択 */
+#stage-select {
+  justify-content: flex-start;
+  padding-top: 12px;
+}
+#stage-select .stage-select-heading {
+  font-family: var(--font-mono);
+  color: var(--accent);
+  font-size: 22px;
+  margin: 18px 0 6px;
+  width: 100%;
+  max-width: 1080px;
+  text-align: center;
+}
+.stage-dict-panel {
+  width: 100%;
+  max-width: 420px;
+  margin: 0 auto 0;
+  padding: 0 0 10px;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--border);
+  border-radius: 0;
+  box-shadow: none;
+}
+.stage-dict-panel-title {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-dim);
+  letter-spacing: 0.04em;
+  margin-bottom: 4px;
+}
+.stage-dict-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.stage-dict-line {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 12px;
+  align-items: baseline;
+  padding: 3px 0;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+}
+.stage-dict-tier {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.stage-dict-tier.t1 { color: var(--tier1); }
+.stage-dict-tier.t2 { color: var(--tier2); }
+.stage-dict-tier.t3 { color: var(--tier3); }
+.stage-dict-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1.35;
+  text-align: right;
+}
+.stage-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 18px;
+  width: 100%;
+  max-width: 1080px;
+  margin: 20px 0 22px;
+}
+.stage-card {
+  padding: 20px 20px 18px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.15s;
+  box-shadow: none;
+}
+.stage-card:hover {
+  background: #efe8d9;
+  border-color: var(--accent);
+  transform: translateY(-2px);
+  box-shadow: none;
+}
+.stage-card h3 {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 14px;
+}
+.stage-card .stage-id {
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  color: #4f5f5b;
+  font-family: var(--font-mono);
+  font-weight: 700;
+}
+.stage-card .stage-name {
+  font-size: 20px;
+  color: #1f2f2b;
+  font-weight: 700;
+}
+.stage-card .difficulty {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 14px;
+  font-family: var(--font-mono);
+}
+.stage-card .difficulty .label {
+  font-size: 12px;
+  color: #4f5f5b;
+  letter-spacing: 0.04em;
+  font-weight: 700;
+}
+.stage-card .difficulty .stars {
+  color: #d4a24b;
+  font-size: 18px;
+  letter-spacing: 0.06em;
+  font-weight: 700;
+}
+.stage-card .meta {
+  display: grid;
+  gap: 10px;
+}
+.stage-card .meta > div {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-family: var(--font-mono);
+  font-size: 15px;
+  color: #43534f;
+  font-weight: 600;
+  line-height: 1.4;
+}
+.stage-card .meta > div span {
+  opacity: 1;
+}
+.stage-card .meta > div strong {
+  color: #1f2f2b;
+  font-size: 16px;
+  font-weight: 800;
+}
+.stage-card .meta .lock-note {
+  margin-top: 6px;
+  justify-content: flex-start;
+  color: var(--ng);
+  font-size: 13px;
+  line-height: 1.5;
+}
+.stage-card .meta .lock-note.clear {
+  color: var(--accent);
+}
+.stage-card.locked {
+  border-style: dashed;
+}
+
+/* 結果画面 */
+.result-box {
+  background: var(--panel);
+  padding: 32px 44px;
+  border-radius: 10px;
+  min-width: 420px;
+  border: 1px solid var(--border);
+  box-shadow: 0 4px 12px var(--panel-shadow);
+}
+.result-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--bg-alt);
+  font-family: var(--font-mono);
+  font-size: 15px;
+}
+.result-row:last-child { border-bottom: none; }
+.result-row span:first-child { color: var(--text-dim); }
+.result-row span:last-child { color: var(--accent); font-weight: bold; }
+
+/* 設定画面 */
+.settings-box {
+  background: var(--panel);
+  padding: 28px;
+  border-radius: 10px;
+  min-width: 560px;
+  max-width: 90vw;
+  max-height: 85vh;
+  overflow-y: auto;
+  border: 1px solid var(--border);
+  box-shadow: 0 4px 12px var(--panel-shadow);
+}
+.settings-section {
+  margin-bottom: 22px;
+  padding-bottom: 22px;
+  border-bottom: 1px solid var(--bg-alt);
+}
+.settings-section:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+.settings-section h3 {
+  font-size: 15px;
+  color: var(--accent);
+  margin-bottom: 12px;
+  font-family: var(--font-mono);
+}
+.settings-section p {
+  font-size: 13px;
+  color: var(--text-dim);
+  margin-bottom: 10px;
+}
+/* 遊び方は本文を少し濃くして読みやすくする */
+#help-screen .settings-section h3 {
+  color: #2c4f45;
+  font-size: 17px;
+}
+#help-screen .settings-section p {
+  color: #2f4741;
+  font-size: 15px;
+  line-height: 1.75;
+}
+#help-screen .inline-key {
+  background: transparent;
+  border: 0;
+  padding: 0;
+  font-weight: 700;
+  color: #2c4f45;
+}
+.settings-section button {
+  padding: 9px 14px;
+  background: var(--bg-alt);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  cursor: pointer;
+  margin-right: 6px;
+  margin-top: 4px;
+  transition: all 0.1s;
+}
+.settings-section button:hover {
+  background: var(--bg-dark);
+}
+.settings-section button.danger {
+  border-color: var(--ng);
+  color: var(--ng);
+}
+
+/* Tier 別 出題辞書 UI（設定） */
+.tier-dict-row {
+  display: grid;
+  grid-template-columns: 60px 1fr;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 6px;
+}
+.tier-dict-row label {
+  font-family: var(--font-mono);
+  font-size: 12px;
+}
+.tier-dict-row select {
+  padding: 6px 8px;
+  background: var(--bg-alt);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+}
+
+/* ファイル入力 */
+.file-input-label {
+  display: inline-block;
+  padding: 7px 12px;
+  background: var(--accent);
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+  font-family: var(--font-mono);
+  color: #fff;
+  transition: background 0.1s;
+}
+.file-input-label:hover { background: var(--accent-dim); }
+.file-input-label input { display: none; }
+
+/* データリセット確認ダイアログ */
+.confirm-dialog {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background: rgba(20, 28, 26, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.confirm-dialog.hidden {
+  display: none;
+}
+.confirm-dialog-box {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 24px 28px;
+  max-width: 420px;
+  width: 100%;
+  box-shadow: 0 8px 28px var(--panel-shadow);
+}
+.confirm-dialog-box h3 {
+  font-family: var(--font-mono);
+  font-size: 17px;
+  color: var(--accent);
+  margin: 0 0 14px;
+}
+.confirm-dialog-text {
+  font-size: 14px;
+  line-height: 1.65;
+  color: var(--text);
+  margin: 0 0 22px;
+}
+.confirm-dialog-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: flex-end;
+}
+.confirm-dialog-actions .menu-btn {
+  min-width: 0;
+  margin: 0;
+  padding: 12px 18px;
+  font-size: 14px;
+}
+.confirm-dialog-actions .menu-btn.danger {
+  border-color: var(--ng);
+  color: var(--ng);
+}

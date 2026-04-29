@@ -1,0 +1,17 @@
+# Cloudflare Pages _headers
+# HTMLはキャッシュしない(常に最新取得)
+/index.html
+  Cache-Control: no-cache, must-revalidate
+
+/
+  Cache-Control: no-cache, must-revalidate
+
+# 辞書はキャッシュしつつ、バージョン更新時は強制リロードしやすいように短め
+/dictionaries/*
+  Cache-Control: public, max-age=300, must-revalidate
+
+# セキュリティヘッダ
+/*
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: SAMEORIGIN
+  Referrer-Policy: strict-origin-when-cross-origin

@@ -1,0 +1,35 @@
+/* ==========================================================================
+   responsive.css
+   小画面・モバイル対応のメディアクエリ
+   ========================================================================== */
+
+@media (max-height: 780px) {
+  #word-display { font-size: 26px; padding: 12px; min-height: 60px; }
+  #casting { padding: 12px 16px; }
+  .gk-key { width: 36px; height: 32px; font-size: 12px; }
+  .gk-key.wide-1-5 { width: 54px; }
+  .gk-key.wide-2 { width: 76px; }
+  .gk-key.wide-2-5 { width: 94px; }
+  .gk-key.space { width: 200px; }
+  #ghost-keyboard { padding: 10px 12px; }
+}
+
+@media (max-width: 700px) {
+  .stage-dict-line {
+    grid-template-columns: 1fr;
+    gap: 2px;
+  }
+  .stage-dict-panel { max-width: none; margin-bottom: 8px; }
+  .settings-box { min-width: auto; padding: 16px; }
+  .result-box { min-width: auto; padding: 20px; }
+  .records-box { min-width: auto; padding: 14px; }
+  .gk-key { width: 30px; height: 28px; font-size: 11px; }
+  .gk-key.wide-1-5 { width: 44px; }
+  .gk-key.wide-2 { width: 60px; }
+  .gk-key.wide-2-5 { width: 74px; }
+  .gk-key.space { width: 150px; }
+  .gk-row.r2 { padding-left: 14px; }
+  .gk-row.r3 { padding-left: 28px; }
+  .kb-key { width: 28px; height: 28px; font-size: 10px; }
+  .kb-key.space { width: 140px; }
+}

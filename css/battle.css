@@ -1,0 +1,100 @@
+/* ==========================================================================
+   battle.css
+   戦場(Canvas) / 詠唱エリア(Tier選択・ワード表示)
+   ========================================================================== */
+
+#battlefield {
+  flex: 1 1 0;
+  background: linear-gradient(180deg, #a8dff0 0%, #d6f1e3 50%, #88c179 100%);
+  position: relative;
+  min-height: 280px;
+  overflow: hidden;
+}
+#canvas { width: 100%; height: 100%; display: block; }
+
+#casting {
+  background: var(--bg-alt);
+  padding: 16px 20px;
+  border-top: 0;
+  border-bottom: 1px solid var(--border);
+  box-shadow: none;
+}
+
+.tier-selector { display: flex; gap: 10px; margin-bottom: 14px; }
+.tier-btn {
+  flex: 1;
+  padding: 17px 18px;
+  background: var(--bg-alt);
+  border: 2px solid transparent;
+  border-radius: 6px;
+  color: var(--text);
+  font-family: var(--font-mono);
+  font-size: 17px;
+  cursor: pointer;
+  transition: all 0.15s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+.tier-btn:hover { background: var(--bg); }
+.tier-btn.active { background: var(--bg); box-shadow: none; }
+.tier-btn.tier1.active { border-color: var(--tier1); }
+.tier-btn.tier2.active { border-color: var(--tier2); }
+.tier-btn.tier3.active { border-color: var(--tier3); }
+.tier-btn kbd {
+  display: inline-block;
+  padding: 6px 12px;
+  background: var(--text);
+  color: var(--panel);
+  border-radius: 4px;
+  font-size: 15px;
+  font-weight: bold;
+}
+.tier-btn .tier-label {
+  font-size: 18px;
+  line-height: 1;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+.tier-btn.tier1 .tier-label { color: #3b8f6f; }
+.tier-btn.tier2 .tier-label { color: #b8791f; }
+.tier-btn.tier3 .tier-label { color: #a84f3d; }
+.tier-btn.active .tier-label {
+  text-shadow: 0 0 0.01px currentColor;
+}
+
+#word-display {
+  font-family: var(--font-mono);
+  font-size: 36px;
+  letter-spacing: 2px;
+  text-align: center;
+  padding: 20px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  min-height: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  flex-wrap: wrap;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  line-height: 1.25;
+}
+#word-display .done { color: var(--text-dim); }
+#word-display .current {
+  color: var(--accent);
+  background: rgba(58,138,106,0.2);
+  border-radius: 3px;
+  padding: 0 2px;
+}
+#word-display .todo { color: var(--text); }
+#word-display.miss-flash { animation: shake 0.2s; }
+@keyframes shake {
+  0%,100% { transform: translateX(0); }
+  25% { transform: translateX(-3px); }
+  75% { transform: translateX(3px); }
+}

@@ -1,0 +1,58 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=M+PLUS+Rounded+1c:wght@400;700&family=Noto+Sans+JP:wght@400;700&display=swap');
+
+/* ==========================================================================
+   base.css
+   CSS変数(テーマ)・リセット・グローバルな基本スタイル
+   ========================================================================== */
+
+:root {
+  /* Light Forest テーマ - 柔らかい配色 */
+  --bg: #f4f1ea;             /* 生成り / アイボリー */
+  --bg-alt: #e8e2d4;         /* やや濃い紙色 */
+  --bg-dark: #d8cfb9;        /* アクセント用のくすみベージュ */
+  --accent: #3a8a6a;         /* 深緑(植物のメインカラー) */
+  --accent-dim: #2d6b52;
+  --accent-light: #8fc8a8;   /* 若葉色 */
+  --panel: #ffffff;          /* カード背景 */
+  --panel-shadow: rgba(58,138,106,0.1);
+  --text: #2a3d3a;           /* ダークグリーングレー */
+  --text-dim: #7d8f89;
+  --border: #c8c0aa;
+  --ok: #5fa575;
+  --ng: #d96b6b;
+  --tier1: #7fc8a9;
+  --tier2: #e8ab47;
+  --tier3: #c4715e;
+  --sky-start: #c9e4c5;      /* 戦場の空(上) */
+  --sky-end: #e6f0d9;        /* 戦場の地面に近い部分 */
+  --font-en-num: 'Inter', 'M PLUS Rounded 1c', 'Noto Sans JP', 'Hiragino Sans', 'Yu Gothic', 'Meiryo', sans-serif;
+  --font-mono: var(--font-en-num);
+  --font-ui: 'M PLUS Rounded 1c', 'Inter', 'Noto Sans JP', 'Hiragino Sans', 'Yu Gothic', 'Meiryo', sans-serif;
+  --font-ja: var(--font-ui);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-ja);
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+h1, h2, h3, strong {
+  font-family: var(--font-ui);
+}
+
+#app { display: flex; flex-direction: column; height: 100vh; }
+
+main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+}
+
+.hidden { display: none !important; }

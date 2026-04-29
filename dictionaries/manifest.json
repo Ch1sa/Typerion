@@ -1,0 +1,50 @@
+{
+  "version": "1.0.0",
+  "updated": "2026-04-23",
+  "dictionaries": [
+    {
+      "id": "home-row",
+      "file": "home-row.json",
+      "name": "ホームポジション特化",
+      "description": "ブラインドタッチ初心者向け。段階的にキーを増やす",
+      "locale": "en",
+      "recommended_tier": [
+        1
+      ]
+    },
+    {
+      "id": "en-common",
+      "file": "en-common.json",
+      "name": "英単語 - 頻出",
+      "description": "Google頻出1000語 + パングラム・名言",
+      "locale": "en",
+      "recommended_tier": [
+        2,
+        3
+      ]
+    },
+    {
+      "id": "coding",
+      "file": "coding.json",
+      "name": "プログラミング・コマンド",
+      "description": "JS/Python/Shell/Git/SQL のコード片",
+      "locale": "mixed",
+      "recommended_tier": [
+        2,
+        3
+      ]
+    },
+    {
+      "id": "ja-roma",
+      "file": "ja-roma.json",
+      "name": "日本語 - ローマ字",
+      "description": "日本語のローマ字入力練習",
+      "locale": "ja",
+      "recommended_tier": [
+        1,
+        2,
+        3
+      ]
+    }
+  ]
+}
